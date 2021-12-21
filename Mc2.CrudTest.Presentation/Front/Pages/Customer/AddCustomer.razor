@@ -1,0 +1,74 @@
+﻿@page "/addcustomer"
+@inject NavigationManager NavigationManager
+@inject HttpClient _http
+@inject IJSRuntime JsRuntime
+
+<h1>Add Customer</h1>
+
+<EditForm Model="@model" OnValidSubmit="@InsertCustomer">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="form-group">
+                <label for="FirstName" class="control-label">First Name</label>
+                <input form="FirstName" class="form-control" @bind="@model.FirstName" />
+            </div>
+            <div class="form-group">
+                <label for="LastName" class="control-label">Last Name</label>
+                <input form="LastName" class="form-control" @bind="@model.LastName" />
+            </div>
+            <div class="form-group">
+                <label for="PhoneNumber" class="control-label">Phone Number</label>
+                <input form="PhoneNumber" class="form-control" @bind="@model.PhoneNumber" />
+            </div>
+            <div class="form-group">
+                <label for="DateOfBirth" class="control-label">Date Of Birth</label>
+                <input form="DateOfBirth" type="date" class="form-control" @bind="@model.DateOfBirth" />
+            </div>
+            <div class="form-group">
+                <label for="Email" class="control-label">Email</label>
+                <input form="Email" class="form-control" @bind="@model.Email" />
+            </div>
+            <div class="form-group">
+                <label for="BankAccountNumber" class="control-label">Bank Account Number</label>
+                <input form="BankAccountNumber" class="form-control" @bind="@model.BankAccountNumber" />
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary" value="Save" />
+                <input type="button" class="btn btn-primary" @onclick="@Cancel" value="Cancel" />
+            </div>
+        </div>
+    </div>
+</EditForm>
+
+@code {
+    Customer model = new Customer();
+    protected async void InsertCustomer()
+    {
+        var responseMessage = await _http.PostAsJsonAsync<Customer>("InsertCustomer", model).ConfigureAwait(false);
+        var resultString = await responseMessage.Content.ReadAsStringAsync();
+        var result = JsonConvert.DeserializeObject<ServiceResponse<int>>(resultString);
+
+        if (result.ResultStatus == ResultStatus.Successful)
+        {
+            await JsRuntime.InvokeVoidAsync("alert", result.Message);
+        }
+        else
+        {
+            await JsRuntime.InvokeVoidAsync("alert", string.Join(',', result.Errors));
+        }
+    }
+
+
+    void Cancel()
+    {
+        NavigationManager.NavigateTo("customerlist");
+    }
+}

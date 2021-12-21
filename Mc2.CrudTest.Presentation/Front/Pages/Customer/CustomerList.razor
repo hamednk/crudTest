@@ -1,0 +1,61 @@
+﻿@page "/customerlist"
+@inject HttpClient _http
+
+<NavLink class="nav-link" href="AddCustomer">
+    <span class="oi oi-plus" aria-hidden="true">Add New</span>
+
+</NavLink>
+
+<h1>Customer Info</h1>
+@if (Customers is null)
+{
+    <p><em>Loading... !</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Date Of Birth</th>
+                <th>Phone Number</th>
+                <th>Email</th>
+                <th>Bank Account Number</th>
+                <th>Created On</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var customer in Customers)
+            {
+                <tr>
+                    <td>@customer.Id</td>
+                    <td>@customer.FirstName</td>
+                    <td>@customer.LastName</td>
+                    <td>@customer.DateOfBirth</td>
+                    <td>@customer.PhoneNumber</td>
+                    <td>@customer.Email</td>
+                    <td>@customer.BankAccountNumber</td>
+                    <td>@customer.CreatedOn</td>
+                    <td>
+                        <a class="nav-link" href="EditCustomer/@customer.Id">
+                            <span class="oi oi-pencil" aria-hidden="true">Edit</span>
+                        </a>
+                        <a class="nav-link" href="Delete/@customer.Id">
+                            <span class="oi oi-trash" aria-hidden="true">Delete</span>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+@code {
+    List<GetCustomersQueryResult> Customers;
+    protected override async Task OnInitializedAsync()
+    {
+        Customers = await _http.GetFromJsonAsync<List<GetCustomersQueryResult>>("GetCustomers");
+    }
+}

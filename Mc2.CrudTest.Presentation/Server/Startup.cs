@@ -1,8 +1,18 @@
+using Mc2.CrudTest.Application;
+using Mc2.CrudTest.Application.Interfaces;
+using Mc2.CrudTest.Application.Interfaces.Services;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.OpenApi.Models;
+using Persistence;
+using Persistence.Services;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace Mc2.CrudTest.Presentation.Server
 {
@@ -22,6 +32,27 @@ namespace Mc2.CrudTest.Presentation.Server
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddHttpContextAccessor();
+            services.AddControllers().AddFluentValidation(s =>
+            {
+                s.RegisterValidatorsFromAssemblyContaining<Startup>();
+            });
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
+            services.AddApplicationLayer();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Crud Test", Version = "v1" });
+            });
+
+            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
+
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped(typeof(IGenericRepository), typeof(GenericRepository));
+            services.AddScoped(typeof(IGenericService), typeof(GenericService));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -31,6 +62,8 @@ namespace Mc2.CrudTest.Presentation.Server
             {
                 app.UseDeveloperExceptionPage();
                 app.UseWebAssemblyDebugging();
+                app.UseSwagger(new SwaggerOptions { });
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Crud Test v1"));
             }
             else
             {
