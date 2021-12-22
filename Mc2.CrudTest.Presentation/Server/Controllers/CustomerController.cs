@@ -22,19 +22,34 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers
         {
             _logger = logger;
         }
-
-        [HttpGet]
+         
+        [HttpPost]
         [Route("/GetCustomers")]
-        public async Task<List<GetCustomersQueryResult>> Get()
+        public async Task<IActionResult> Get(GetCustomersQuery model)
         {
-            var response = await Mediator.Send(new GetCustomersQuery()).ConfigureAwait(false);
-            return response.Data;
+            var response = await Mediator.Send(model).ConfigureAwait(false);
+            return Ok(response);
         }
-
 
         [HttpPost]
         [Route("/InsertCustomer")]
         public async Task<IActionResult> InsertCustomer(AddOrModifyCustomerCommand model)
+        {
+            var response = await Mediator.Send(model).ConfigureAwait(false);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("/UpdateCustomer")]
+        public async Task<IActionResult> UpdateCustomer(AddOrModifyCustomerCommand model)
+        {
+            var response = await Mediator.Send(model).ConfigureAwait(false);
+            return Ok(response);
+        }
+
+        [HttpPost]
+        [Route("/DeleteCustomer")]
+        public async Task<IActionResult> DeleteCustomer(DeleteCustomerCommand model)
         {
             var response = await Mediator.Send(model).ConfigureAwait(false);
             return Ok(response);

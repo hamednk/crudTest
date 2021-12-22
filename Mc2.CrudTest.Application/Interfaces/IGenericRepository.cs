@@ -14,6 +14,6 @@
         Task<T> Get<T>(string spName, object data);
         Task<T> Add<T>(string spName , object data);
         Task<T> Edit<T>(string spName , object data);
-        Task<bool> Delete(string spName, string data);
+        Task<bool> Delete(string spName, object data);
     }
 }

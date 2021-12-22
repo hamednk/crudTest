@@ -1,13 +1,15 @@
-﻿@page "/addcustomer"
+﻿@page "/editcustomer/{Id:int}"
 @inject NavigationManager NavigationManager
 @inject HttpClient _http
 @inject IJSRuntime JsRuntime
 
-<h1>Add Customer</h1>
+<h1>Edit Customer</h1>
 
-<EditForm Model="@model" OnValidSubmit="@InsertCustomer">
+<EditForm Model="@model" OnValidSubmit="@UpdateCustomer">
     <DataAnnotationsValidator />
     <ValidationSummary />
+
+    <input value="@model.Id" type="hidden" />
 
     <div class="row">
         <div class="col-md-8">
@@ -49,17 +51,49 @@
 </EditForm>
 
 @code {
+    static List<GetCustomersQueryResult> Customers;
     Customer model = new Customer();
-    protected async void InsertCustomer()
+
+    [Parameter]
+    public int? Id { get; set; }
+
+    protected override async Task OnInitializedAsync()
     {
-        var responseMessage = await _http.PostAsJsonAsync<Customer>("InsertCustomer", model).ConfigureAwait(false);
+        if (Id == null)
+        {
+            NavigationManager.NavigateTo("customerlist");
+        }
+
+        var response = await _http.PostAsJsonAsync<CustomerSearchDTO>("GetCustomers", new CustomerSearchDTO { Id = Id }).ConfigureAwait(false);
+        var resultString = await response.Content.ReadAsStringAsync();
+        var result = JsonConvert.DeserializeObject<ServiceResponse<List<GetCustomersQueryResult>>>(resultString);
+
+        if (result.ResultStatus == ResultStatus.Successful)
+        {
+            model.BankAccountNumber = result.Data.FirstOrDefault().BankAccountNumber;
+            model.DateOfBirth = result.Data.FirstOrDefault().DateOfBirth;
+            model.FirstName = result.Data.FirstOrDefault().FirstName;
+            model.LastName = result.Data.FirstOrDefault().LastName;
+            model.Email = result.Data.FirstOrDefault().Email;
+            model.PhoneNumber = result.Data.FirstOrDefault().PhoneNumber;
+            model.Id = Id;
+        }
+        else
+        {
+            NavigationManager.NavigateTo("Accounts");
+        }
+    }
+
+    protected async void UpdateCustomer()
+    {
+        var responseMessage = await _http.PostAsJsonAsync<Customer>("UpdateCustomer", model).ConfigureAwait(false);
         var resultString = await responseMessage.Content.ReadAsStringAsync();
         var result = JsonConvert.DeserializeObject<ServiceResponse<int>>(resultString);
 
         if (result.ResultStatus == ResultStatus.Successful)
         {
             await JsRuntime.InvokeVoidAsync("alert", result.Message);
-            NavigationManager.NavigateTo("customerlist");
+            model = new Customer();
         }
         else
         {

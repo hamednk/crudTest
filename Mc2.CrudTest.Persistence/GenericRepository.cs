@@ -99,7 +99,7 @@
             return result.SingleOrDefault();
         }
 
-        public async Task<bool> Delete(string spName, string data)
+        public async Task<bool> Delete(string spName, object data)
         {
             var result = new List<bool>().AsEnumerable();
             result = await Db_Write.QueryAsync<bool>(spName, data, commandType: CommandType.StoredProcedure).ConfigureAwait(false);

@@ -17,6 +17,6 @@
         Task<ServiceResponse<T>> Get<T>(string spName , object data);
         Task<ServiceResponse<T>> Add<T>(string spName , object data);
         Task<ServiceResponse<T>> Edit<T>(string spName , object data);
-        Task<ServiceResponse<bool>> Delete(string spName, string data);
+        Task<ServiceResponse<bool>> Delete(string spName, object data);
     }
 }

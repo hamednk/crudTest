@@ -51,7 +51,7 @@ namespace Persistence.Services
             var response = new ServiceResponse<bool>();
             try
             {
-                response = await Service.Delete("usp_Customer_Delete", command.Email).ConfigureAwait(false);
+                response = await Service.Delete("usp_Customer_Delete", new { Id = command.Id }).ConfigureAwait(false);
 
                 if (response.ResultStatus == ResultStatus.Successful)
                 {

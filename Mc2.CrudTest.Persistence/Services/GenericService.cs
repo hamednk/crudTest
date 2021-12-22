@@ -194,7 +194,7 @@
             }
         }
 
-        public async Task<ServiceResponse<bool>> Delete(string spName, string data)
+        public async Task<ServiceResponse<bool>> Delete(string spName, object data)
         {
             var result = new ServiceResponse<bool>();
             try

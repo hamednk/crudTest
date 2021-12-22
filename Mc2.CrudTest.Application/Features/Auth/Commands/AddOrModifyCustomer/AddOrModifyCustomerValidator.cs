@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Mail;
 using System.Threading;
 using System.Threading.Tasks;
+using Mc2.CrudTest.Domain;
 
 namespace Mc2.CrudTest.Application.Features.Auth.Commands
 {
@@ -18,7 +19,7 @@ namespace Mc2.CrudTest.Application.Features.Auth.Commands
         {
             Service = genericService;
 
-            RuleFor(p => p.Email)
+            RuleFor(p => p)
                 .MustAsync(IsValidEmailAddress).WithMessage("Please enter correct email !")
                 .MustAsync(IsUniqueEmail).WithMessage("Your email duplicate !, Please enter other email!");
 
@@ -38,13 +39,13 @@ namespace Mc2.CrudTest.Application.Features.Auth.Commands
 
             return result;
         }
-        private async Task<bool> IsValidEmailAddress(string emailaddress, CancellationToken token)
+        private async Task<bool> IsValidEmailAddress(Customer model, CancellationToken token)
         {
             var result = await Task.Run(() =>
             {
                 try
                 {
-                    MailAddress m = new MailAddress(emailaddress);
+                    MailAddress m = new MailAddress(model.Email);
                     return true;
                 }
                 catch (FormatException)
@@ -56,9 +57,12 @@ namespace Mc2.CrudTest.Application.Features.Auth.Commands
             return result;
         }
 
-        private async Task<bool> IsUniqueEmail(string emailAddress, CancellationToken token)
+        private async Task<bool> IsUniqueEmail(Customer model, CancellationToken token)
         {
-            var result = (await Service.ActionWithQueryAndParams<string>("SELECT [Email] FROM [Customer] WHERE [Email] = @Email", new { Email = emailAddress }).ConfigureAwait(false)).Data.Any();
+            if (model.Id.HasValue)
+                return true;
+
+            var result = (await Service.ActionWithQueryAndParams<string>("SELECT [Email] FROM [Customer] WHERE [Email] = @Email", new { Email = model.Email }).ConfigureAwait(false)).Data.Any();
             return !result;
         }
     }
