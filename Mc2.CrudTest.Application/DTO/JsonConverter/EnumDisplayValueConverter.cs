@@ -34,7 +34,7 @@ namespace Mc2.CrudTest.Application.DTO.JsonConverter
 
         string GetEnumDisplayValue(Enum enumName)
         {
-            Type type = (Type)enumName.GetType();
+            Type type = enumName.GetType();
             FieldInfo? field = type.GetField(enumName.ToString());
             DisplayAttribute? display = ((DisplayAttribute[])field?.GetCustomAttributes(typeof(DisplayAttribute), false))?.FirstOrDefault();
             return display != null
