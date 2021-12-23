@@ -1,6 +1,6 @@
 ﻿@page "/customerlist"
 @inject HttpClient _http
-@inject IJSRuntime JsRuntime
+@inject IJSRuntime _jsRuntime
 
 <NavLink class="nav-link" href="AddCustomer">
     <span class="oi oi-plus" aria-hidden="true">Add New</span>
@@ -8,7 +8,7 @@
 </NavLink>
 
 <h1>Customer Info</h1>
-@if (Customers is null)
+@if (_customers is null)
 {
     <p><em>Loading... !</em></p>
 }
@@ -27,7 +27,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (GetCustomersQueryResult customer in Customers)
+            @foreach (GetCustomersQueryResult customer in _customers)
             {
                 <tr>
                     <td>@customer.Id</td>
@@ -55,17 +55,17 @@ else
 
 
 @code {
-    List<GetCustomersQueryResult> Customers;
+    List<GetCustomersQueryResult> _customers;
     protected override async Task OnInitializedAsync()
     {
-        HttpResponseMessage responseMessage = await _http.PostAsJsonAsync<CustomerSearchDTO>("GetCustomers", new CustomerSearchDTO { }).ConfigureAwait(false);
+        HttpResponseMessage responseMessage = await _http.PostAsJsonAsync<CustomerSearchDto>("GetCustomers", new CustomerSearchDto { }).ConfigureAwait(false);
         string resultString = await responseMessage.Content.ReadAsStringAsync();
-        Customers = JsonConvert.DeserializeObject<ServiceResponse<List<GetCustomersQueryResult>>>(resultString)?.Data;
+        _customers = JsonConvert.DeserializeObject<ServiceResponse<List<GetCustomersQueryResult>>>(resultString)?.Data;
     }
 
     protected async void DeleteCustomer(int id)
     {
-        bool confirm = await JsRuntime.InvokeAsync<bool>("confirm", "Do you want to delete this customer?");
+        bool confirm = await _jsRuntime.InvokeAsync<bool>("confirm", "Do you want to delete this customer?");
         if (confirm)
         {
             HttpResponseMessage responseMessage = await _http.PostAsJsonAsync<Customer>("DeleteCustomer", new Customer { Id = id }).ConfigureAwait(false);
@@ -74,11 +74,11 @@ else
 
             if (result.ResultStatus == ResultStatus.Successful)
             {
-                await JsRuntime.InvokeVoidAsync("alert", result.Message);
+                await _jsRuntime.InvokeVoidAsync("alert", result.Message);
             }
             else
             {
-                await JsRuntime.InvokeVoidAsync("alert", string.Join(',', result.Errors));
+                await _jsRuntime.InvokeVoidAsync("alert", string.Join(',', result.Errors));
             }
         }
     }

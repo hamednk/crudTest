@@ -13,9 +13,9 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers.Base
 {
     [ApiController]
     [Produces("application/json")]
-    public abstract class BaseAPIController : Controller
+    public abstract class BaseApiController : Controller
     {
-        public BaseAPIController()
+        public BaseApiController()
         {
             CultureInfo newCulture = new("fa-IR", false);
             newCulture.DateTimeFormat.LongDatePattern = "yyyy/MM/dd HH:mm:ss";

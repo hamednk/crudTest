@@ -14,15 +14,15 @@ namespace Mc2.CrudTest.Application.Features.Auth.Commands
 
     public class AddOrModifyCustomerCommandHandler : IRequestHandler<AddOrModifyCustomerCommand, ServiceResponse<int>>
     {
-        private readonly IAuthService Auth;
-        public AddOrModifyCustomerCommandHandler(IAuthService Auth)
+        private readonly IAuthService _auth;
+        public AddOrModifyCustomerCommandHandler(IAuthService auth)
         {
-            this.Auth = Auth;
+            this._auth = auth;
         }
 
         public async Task<ServiceResponse<int>> Handle(AddOrModifyCustomerCommand request, CancellationToken cancellationToken)
         {
-            ServiceResponse<int> response = await Auth.AddOrModifyCustomer(request);
+            ServiceResponse<int> response = await _auth.AddOrModifyCustomer(request);
             return response;
         }
 

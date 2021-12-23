@@ -3,7 +3,7 @@ using System;
 
 namespace Mc2.CrudTest.Application.DTO.Customer
 {
-    public class CustomerSearchDTO : BaseSearchRequestDto
+    public class CustomerSearchDto : BaseSearchRequestDto
     {
         public int? Id { get; set; }
         public string FirstName { get; set; }

@@ -13,7 +13,7 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers
     [ApiController]
     [ValidationFilter]
     [Route("[controller]")]
-    public class CustomerController : BaseAPIController
+    public class CustomerController : BaseApiController
     {
         private readonly ILogger<CustomerController> _logger;
 

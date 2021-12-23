@@ -14,15 +14,15 @@ namespace Mc2.CrudTest.Application.Features.Auth.Commands
 
     public class DeleteCustomerCommandHandler : IRequestHandler<DeleteCustomerCommand, ServiceResponse<bool>>
     {
-        private readonly IAuthService Auth;
-        public DeleteCustomerCommandHandler(IAuthService Auth)
+        private readonly IAuthService _auth;
+        public DeleteCustomerCommandHandler(IAuthService auth)
         {
-            this.Auth = Auth;
+            this._auth = auth;
         }
 
         public async Task<ServiceResponse<bool>> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
         {
-            ServiceResponse<bool> response = await Auth.DeleteCustomer(request);
+            ServiceResponse<bool> response = await _auth.DeleteCustomer(request);
             return response;
         }
 

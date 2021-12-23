@@ -1,11 +1,11 @@
 ﻿@page "/addcustomer"
-@inject NavigationManager NavigationManager
+@inject NavigationManager _navigationManager
 @inject HttpClient _http
-@inject IJSRuntime JsRuntime
+@inject IJSRuntime _jsRuntime
 
 <h1>Add Customer</h1>
 
-<EditForm Model="@model" OnValidSubmit="@InsertCustomer">
+<EditForm Model="@_model" OnValidSubmit="@InsertCustomer">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
@@ -13,27 +13,27 @@
         <div class="col-md-8">
             <div class="form-group">
                 <label for="FirstName" class="control-label">First Name</label>
-                <input form="FirstName" class="form-control" @bind="@model.FirstName" />
+                <input form="FirstName" class="form-control" @bind="@_model.FirstName" />
             </div>
             <div class="form-group">
                 <label for="LastName" class="control-label">Last Name</label>
-                <input form="LastName" class="form-control" @bind="@model.LastName" />
+                <input form="LastName" class="form-control" @bind="@_model.LastName" />
             </div>
             <div class="form-group">
                 <label for="PhoneNumber" class="control-label">Phone Number</label>
-                <input form="PhoneNumber" class="form-control" @bind="@model.PhoneNumber" />
+                <input form="PhoneNumber" class="form-control" @bind="@_model.PhoneNumber" />
             </div>
             <div class="form-group">
                 <label for="DateOfBirth" class="control-label">Date Of Birth</label>
-                <input form="DateOfBirth" type="date" class="form-control" @bind="@model.DateOfBirth" />
+                <input form="DateOfBirth" type="date" class="form-control" @bind="@_model.DateOfBirth" />
             </div>
             <div class="form-group">
                 <label for="Email" class="control-label">Email</label>
-                <input form="Email" class="form-control" @bind="@model.Email" />
+                <input form="Email" class="form-control" @bind="@_model.Email" />
             </div>
             <div class="form-group">
                 <label for="BankAccountNumber" class="control-label">Bank Account Number</label>
-                <input form="BankAccountNumber" class="form-control" @bind="@model.BankAccountNumber" />
+                <input form="BankAccountNumber" class="form-control" @bind="@_model.BankAccountNumber" />
             </div>
         </div>
     </div>
@@ -49,27 +49,27 @@
 </EditForm>
 
 @code {
-    Customer model = new();
+    Customer _model = new();
     protected async void InsertCustomer()
     {
-        HttpResponseMessage responseMessage = await _http.PostAsJsonAsync<Customer>("InsertCustomer", model).ConfigureAwait(false);
+        HttpResponseMessage responseMessage = await _http.PostAsJsonAsync<Customer>("InsertCustomer", _model).ConfigureAwait(false);
         string resultString = await responseMessage.Content.ReadAsStringAsync();
         ServiceResponse<int>? result = JsonConvert.DeserializeObject<ServiceResponse<int>>(resultString);
 
         if (result.ResultStatus == ResultStatus.Successful)
         {
-            await JsRuntime.InvokeVoidAsync("alert", result.Message);
-            NavigationManager.NavigateTo("customerlist");
+            await _jsRuntime.InvokeVoidAsync("alert", result.Message);
+            _navigationManager.NavigateTo("customerlist");
         }
         else
         {
-            await JsRuntime.InvokeVoidAsync("alert", string.Join(',', result.Errors));
+            await _jsRuntime.InvokeVoidAsync("alert", string.Join(',', result.Errors));
         }
     }
 
 
     void Cancel()
     {
-        NavigationManager.NavigateTo("customerlist");
+        _navigationManager.NavigateTo("customerlist");
     }
 }

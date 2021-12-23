@@ -8,7 +8,7 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers.Base
 {
     public static class Gateway
     {
-        public static ServiceResponse<T> CallAPI<T>(this object modelInput, string baseAddress, string routeName)
+        public static ServiceResponse<T> CallApi<T>(this object modelInput, string baseAddress, string routeName)
         {
             string finalResult = string.Empty;
             ServiceResponse<T> response = new();
