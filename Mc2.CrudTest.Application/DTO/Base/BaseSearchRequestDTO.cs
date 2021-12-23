@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Mc2.CrudTest.Application.DTO.Base
+﻿namespace Mc2.CrudTest.Application.DTO.Base
 {
     public class BaseSearchRequestDto
     {

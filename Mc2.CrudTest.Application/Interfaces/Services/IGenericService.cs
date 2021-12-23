@@ -1,7 +1,6 @@
 ﻿namespace Mc2.CrudTest.Application.Interfaces.Services
 {
     using Mc2.CrudTest.Application.Interfaces.Services.Base;
-    using System;
     using System.Collections.Generic;
     using System.Data;
     using System.Threading.Tasks;

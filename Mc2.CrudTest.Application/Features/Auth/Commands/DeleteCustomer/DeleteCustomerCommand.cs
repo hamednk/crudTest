@@ -2,7 +2,6 @@
 using Mc2.CrudTest.Application.Interfaces.Services.Base;
 using Mc2.CrudTest.Domain;
 using MediatR;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 

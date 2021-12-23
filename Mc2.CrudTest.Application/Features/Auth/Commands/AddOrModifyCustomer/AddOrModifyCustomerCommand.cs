@@ -1,6 +1,5 @@
 ﻿using Mc2.CrudTest.Application.Interfaces.Services;
 using Mc2.CrudTest.Application.Interfaces.Services.Base;
-using Mc2.CrudTest.Application.DTO.Customer;
 using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
