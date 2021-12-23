@@ -1,4 +1,6 @@
-﻿namespace Mc2.CrudTest.Application.Interfaces.Services.Base
+﻿using Mc2.CrudTest.Domain.Localizations;
+
+namespace Mc2.CrudTest.Application.Interfaces.Services.Base
 {
     using Mc2.CrudTest.Application.DTO.JsonConverter;
     using Newtonsoft.Json;
@@ -67,12 +69,7 @@
             ResultStatus = ResultStatus.Exception;
             Exception = ex;
             Message = ex != null ? ex.Message : string.Empty;
-            switch (ex.Number)
-            {
-                case 2601:
-                    Message = "اطلاعات وارد شده تکراری می باشد";
-                    break;
-            }
+            if (ex?.Number == 2601) Message = Localizable.DuplicateRecord;
         }
         public void SetException(Exception ex)
         {
