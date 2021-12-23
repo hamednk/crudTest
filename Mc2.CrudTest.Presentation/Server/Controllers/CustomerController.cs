@@ -1,6 +1,4 @@
-﻿using Mc2.CrudTest.Application.Features.Auth.Commands;
-using Mc2.CrudTest.Application.Features.Auth.Queries;
-using Mc2.CrudTest.Presentation.Server.ActionFilters;
+﻿using Mc2.CrudTest.Presentation.Server.ActionFilters;
 using Mc2.CrudTest.Presentation.Server.Controllers.Base;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

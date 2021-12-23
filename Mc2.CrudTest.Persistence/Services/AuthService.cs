@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Mc2.CrudTest.Application.Features.Auth.Commands;
 using Mc2.CrudTest.Application.Features.Auth.Commands.AddOrModifyCustomer;
 using Mc2.CrudTest.Application.Features.Auth.Commands.DeleteCustomer;
-using Mc2.CrudTest.Application.Features.Auth.Queries;
 using Mc2.CrudTest.Application.Features.Auth.Queries.GetCustomers;
 using Mc2.CrudTest.Application.Interfaces.Services;
 using Mc2.CrudTest.Application.Interfaces.Services.Base;
@@ -54,7 +52,7 @@ namespace Mc2.CrudTest.Persistence.Services
             ServiceResponse<bool> response = new();
             try
             {
-                response = await Service.Delete("usp_Customer_Delete", new { Id = command.Id }).ConfigureAwait(false);
+                response = await Service.Delete("usp_Customer_Delete", new {command.Id }).ConfigureAwait(false);
 
                 if (response.ResultStatus == ResultStatus.Successful)
                 {

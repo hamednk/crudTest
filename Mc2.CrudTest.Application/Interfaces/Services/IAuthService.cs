@@ -4,9 +4,7 @@ using Mc2.CrudTest.Application.Features.Auth.Queries.GetCustomers;
 
 namespace Mc2.CrudTest.Application.Interfaces.Services
 {
-    using Mc2.CrudTest.Application.Features.Auth.Commands;
-    using Mc2.CrudTest.Application.Features.Auth.Queries;
-    using Mc2.CrudTest.Application.Interfaces.Services.Base;
+    using Base;
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
