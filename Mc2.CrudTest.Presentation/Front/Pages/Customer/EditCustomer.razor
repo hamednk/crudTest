@@ -64,9 +64,9 @@
             NavigationManager.NavigateTo("customerlist");
         }
 
-        var response = await _http.PostAsJsonAsync<CustomerSearchDTO>("GetCustomers", new CustomerSearchDTO { Id = Id }).ConfigureAwait(false);
-        var resultString = await response.Content.ReadAsStringAsync();
-        var result = JsonConvert.DeserializeObject<ServiceResponse<List<GetCustomersQueryResult>>>(resultString);
+        HttpResponseMessage response = await _http.PostAsJsonAsync<CustomerSearchDTO>("GetCustomers", new CustomerSearchDTO { Id = Id }).ConfigureAwait(false);
+        string resultString = await response.Content.ReadAsStringAsync();
+        ServiceResponse<List<GetCustomersQueryResult>>? result = JsonConvert.DeserializeObject<ServiceResponse<List<GetCustomersQueryResult>>>(resultString);
 
         if (result.ResultStatus == ResultStatus.Successful)
         {
@@ -86,9 +86,9 @@
 
     protected async void UpdateCustomer()
     {
-        var responseMessage = await _http.PostAsJsonAsync<Customer>("UpdateCustomer", model).ConfigureAwait(false);
-        var resultString = await responseMessage.Content.ReadAsStringAsync();
-        var result = JsonConvert.DeserializeObject<ServiceResponse<int>>(resultString);
+        HttpResponseMessage responseMessage = await _http.PostAsJsonAsync<Customer>("UpdateCustomer", model).ConfigureAwait(false);
+        string resultString = await responseMessage.Content.ReadAsStringAsync();
+        ServiceResponse<int>? result = JsonConvert.DeserializeObject<ServiceResponse<int>>(resultString);
 
         if (result.ResultStatus == ResultStatus.Successful)
         {

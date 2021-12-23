@@ -11,7 +11,7 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers.Base
         public static ServiceResponse<T> CallAPI<T>(this object modelInput, string baseAddress, string routeName)
         {
             string finalResult = string.Empty;
-            var response = new ServiceResponse<T>();
+            ServiceResponse<T> response = new ServiceResponse<T>();
 
             try
             {
@@ -21,15 +21,15 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers.Base
                     req.ContentType = "application/json";
                     req.ServicePoint.Expect100Continue = false;
 
-                    var json = JsonConvert.SerializeObject(modelInput);
-                    var bytes = Encoding.UTF8.GetBytes(json);
+                    string json = JsonConvert.SerializeObject(modelInput);
+                    byte[] bytes = Encoding.UTF8.GetBytes(json);
                     req.GetRequestStream().Write(bytes, 0, bytes.Length);
 
-                    var result = req.GetResponse() as HttpWebResponse;
+                    HttpWebResponse result = req.GetResponse() as HttpWebResponse;
 
                     if (result != null)
                     {
-                        var responseStream = result.GetResponseStream();
+                        Stream responseStream = result.GetResponseStream();
                         if (responseStream != null)
                         {
                             finalResult = new StreamReader(responseStream).ReadToEnd();
@@ -42,7 +42,7 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers.Base
             {
                 if (ex.Status == WebExceptionStatus.ProtocolError)
                 {
-                    var webResponse = ex.Response as HttpWebResponse;
+                    HttpWebResponse webResponse = ex.Response as HttpWebResponse;
                     if (response != null)
                     {
 

@@ -23,7 +23,7 @@ namespace Mc2.CrudTest.Application.Features.Auth.Commands
 
         public async Task<ServiceResponse<bool>> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
         {
-            var response = await Auth.DeleteCustomer(request);
+            ServiceResponse<bool> response = await Auth.DeleteCustomer(request);
             return response;
         }
 

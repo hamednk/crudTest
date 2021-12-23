@@ -1,12 +1,12 @@
-﻿using Mc2.CrudTest.Application.Features.Auth.Commands;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using Mc2.CrudTest.Application.Features.Auth.Commands;
 using Mc2.CrudTest.Application.Features.Auth.Queries;
 using Mc2.CrudTest.Application.Interfaces.Services;
 using Mc2.CrudTest.Application.Interfaces.Services.Base;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace Persistence.Services
+namespace Mc2.CrudTest.Persistence.Services
 {
     public class AuthService : IAuthService
     {
@@ -19,7 +19,7 @@ namespace Persistence.Services
 
         public async Task<ServiceResponse<int>> AddOrModifyCustomer(AddOrModifyCustomerCommand command)
         {
-            var response = new ServiceResponse<int>();
+            ServiceResponse<int> response = new ServiceResponse<int>();
             try
             {
                 if (command.Id.HasValue)
@@ -29,12 +29,12 @@ namespace Persistence.Services
 
                 if (response.ResultStatus == ResultStatus.Successful)
                 {
-                    var message = "Save Successful!";
+                    string message = "Save Successful!";
                     response.SetResult(ResultStatus.Successful, "Success", message, 200);
                 }
                 else
                 {
-                    var message = "Save Error !";
+                    string message = "Save Error !";
                     response.SetResult(ResultStatus.Exception, "Error", message, 400);
                 }
             }
@@ -48,19 +48,19 @@ namespace Persistence.Services
 
         public async Task<ServiceResponse<bool>> DeleteCustomer(DeleteCustomerCommand command)
         {
-            var response = new ServiceResponse<bool>();
+            ServiceResponse<bool> response = new ServiceResponse<bool>();
             try
             {
                 response = await Service.Delete("usp_Customer_Delete", new { Id = command.Id }).ConfigureAwait(false);
 
                 if (response.ResultStatus == ResultStatus.Successful)
                 {
-                    var message = "Delete Successful!";
+                    string message = "Delete Successful!";
                     response.SetResult(ResultStatus.Successful, "Success", message, 200);
                 }
                 else
                 {
-                    var message = "Delete Error !";
+                    string message = "Delete Error !";
                     response.SetResult(ResultStatus.Exception, "Error", message, 400);
                 }
             }
@@ -74,7 +74,7 @@ namespace Persistence.Services
 
         public async Task<ServiceResponse<List<GetCustomersQueryResult>>> GetCustomers(GetCustomersQuery command)
         {
-            var response = new ServiceResponse<List<GetCustomersQueryResult>>();
+            ServiceResponse<List<GetCustomersQueryResult>> response = new ServiceResponse<List<GetCustomersQueryResult>>();
             try
             {
                 response = await Service.List<GetCustomersQueryResult>("usp_Customer_List", command, System.Data.CommandType.StoredProcedure).ConfigureAwait(false);

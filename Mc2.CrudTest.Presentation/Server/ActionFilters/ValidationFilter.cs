@@ -12,9 +12,9 @@ namespace Mc2.CrudTest.Presentation.Server.ActionFilters
         {
             if (!context.ModelState.IsValid)
             {
-                var result = new ServiceResponse<List<string>>();
+                ServiceResponse<List<string>> result = new ServiceResponse<List<string>>();
 
-                var data = context.ModelState
+                List<string> data = context.ModelState
                      .Values
                      .SelectMany(v => v.Errors.Select(b => b.ErrorMessage))
                      .ToList();

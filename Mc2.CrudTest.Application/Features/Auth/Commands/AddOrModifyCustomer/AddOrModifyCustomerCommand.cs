@@ -23,7 +23,7 @@ namespace Mc2.CrudTest.Application.Features.Auth.Commands
 
         public async Task<ServiceResponse<int>> Handle(AddOrModifyCustomerCommand request, CancellationToken cancellationToken)
         {
-            var response = await Auth.AddOrModifyCustomer(request);
+            ServiceResponse<int> response = await Auth.AddOrModifyCustomer(request);
             return response;
         }
 

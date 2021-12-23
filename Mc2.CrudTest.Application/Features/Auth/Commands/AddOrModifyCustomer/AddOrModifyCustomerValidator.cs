@@ -32,7 +32,7 @@ namespace Mc2.CrudTest.Application.Features.Auth.Commands
             PhoneNumberUtil phoneUtil = PhoneNumberUtil.GetInstance();
             PhoneNumber queryPhoneNumber = phoneUtil.Parse(phoneNumber, "IR");
 
-            var result = await Task.Run(() =>
+            bool result = await Task.Run(() =>
                  {
                      return phoneUtil.IsValidNumber(queryPhoneNumber) ? true : false;
                  }).ConfigureAwait(false);
@@ -41,7 +41,7 @@ namespace Mc2.CrudTest.Application.Features.Auth.Commands
         }
         private async Task<bool> IsValidEmailAddress(Customer model, CancellationToken token)
         {
-            var result = await Task.Run(() =>
+            bool result = await Task.Run(() =>
             {
                 try
                 {
@@ -62,7 +62,7 @@ namespace Mc2.CrudTest.Application.Features.Auth.Commands
             if (model.Id.HasValue)
                 return true;
 
-            var result = (await Service.ActionWithQueryAndParams<string>("SELECT [Email] FROM [Customer] WHERE [Email] = @Email", new { Email = model.Email }).ConfigureAwait(false)).Data.Any();
+            bool result = (await Service.ActionWithQueryAndParams<string>("SELECT [Email] FROM [Customer] WHERE [Email] = @Email", new { Email = model.Email }).ConfigureAwait(false)).Data.Any();
             return !result;
         }
     }

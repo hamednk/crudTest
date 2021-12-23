@@ -1,4 +1,7 @@
-﻿namespace Mc2.CrudTest.Application.DTO.JsonConverter
+﻿using System.Collections.Generic;
+using System.Reflection;
+
+namespace Mc2.CrudTest.Application.DTO.JsonConverter
 {
     using Newtonsoft.Json;
     using System;
@@ -14,7 +17,7 @@
             }
             else
             {
-                var @enum = (Enum)value;
+                Enum @enum = (Enum)value;
                 writer.WriteValue(GetEnumDisplayValue(@enum));
             }
         }
@@ -31,9 +34,9 @@
 
         string GetEnumDisplayValue(Enum enumName)
         {
-            var type = (Type)enumName.GetType();
-            var field = type.GetField(enumName.ToString());
-            var display = ((DisplayAttribute[])field?.GetCustomAttributes(typeof(DisplayAttribute), false))?.FirstOrDefault();
+            Type type = (Type)enumName.GetType();
+            FieldInfo? field = type.GetField(enumName.ToString());
+            DisplayAttribute? display = ((DisplayAttribute[])field?.GetCustomAttributes(typeof(DisplayAttribute), false))?.FirstOrDefault();
             return display != null
                 ? display.Name
                 : enumName.ToString();
@@ -41,10 +44,10 @@
 
         string GetDisplayValueToEnumValue(Type type, string displayName)
         {
-            var fields = type.GetFields().ToList();
-            foreach (var fieldInfo in fields)
+            List<FieldInfo> fields = type.GetFields().ToList();
+            foreach (FieldInfo fieldInfo in fields)
             {
-                var display = ((DisplayAttribute[])fieldInfo.GetCustomAttributes(typeof(DisplayAttribute), false)).FirstOrDefault();
+                DisplayAttribute? display = ((DisplayAttribute[])fieldInfo.GetCustomAttributes(typeof(DisplayAttribute), false)).FirstOrDefault();
                 if (display == null ||
                      displayName != display.GetName())
                     continue;

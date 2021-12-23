@@ -23,7 +23,7 @@ namespace Mc2.CrudTest.Application.Features.Auth.Queries
 
         public async Task<ServiceResponse<List<GetCustomersQueryResult>>> Handle(GetCustomersQuery request, CancellationToken cancellationToken)
         {
-            var response = await service.GetCustomers(request);
+            ServiceResponse<List<GetCustomersQueryResult>> response = await service.GetCustomers(request);
             return response;
         }
 

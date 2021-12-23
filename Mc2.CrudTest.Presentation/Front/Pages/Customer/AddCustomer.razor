@@ -52,9 +52,9 @@
     Customer model = new Customer();
     protected async void InsertCustomer()
     {
-        var responseMessage = await _http.PostAsJsonAsync<Customer>("InsertCustomer", model).ConfigureAwait(false);
-        var resultString = await responseMessage.Content.ReadAsStringAsync();
-        var result = JsonConvert.DeserializeObject<ServiceResponse<int>>(resultString);
+        HttpResponseMessage responseMessage = await _http.PostAsJsonAsync<Customer>("InsertCustomer", model).ConfigureAwait(false);
+        string resultString = await responseMessage.Content.ReadAsStringAsync();
+        ServiceResponse<int>? result = JsonConvert.DeserializeObject<ServiceResponse<int>>(resultString);
 
         if (result.ResultStatus == ResultStatus.Successful)
         {

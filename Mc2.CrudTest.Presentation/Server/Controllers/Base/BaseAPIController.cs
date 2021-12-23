@@ -35,7 +35,7 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers.Base
 
         public override OkObjectResult Ok([ActionResultObjectValue] object value)
         {
-            var response = new OkObjectResult(value);
+            OkObjectResult response = new OkObjectResult(value);
             dynamic result = value;
 
             response.Value = value;

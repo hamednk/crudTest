@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Mc2.CrudTest.Application.Interfaces.Services.Base;
 
 namespace Mc2.CrudTest.Presentation.Server.Controllers
 {
@@ -27,7 +28,7 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers
         [Route("/GetCustomers")]
         public async Task<IActionResult> Get(GetCustomersQuery model)
         {
-            var response = await Mediator.Send(model).ConfigureAwait(false);
+            ServiceResponse<List<GetCustomersQueryResult>> response = await Mediator.Send(model).ConfigureAwait(false);
             return Ok(response);
         }
 
@@ -35,7 +36,7 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers
         [Route("/InsertCustomer")]
         public async Task<IActionResult> InsertCustomer(AddOrModifyCustomerCommand model)
         {
-            var response = await Mediator.Send(model).ConfigureAwait(false);
+            ServiceResponse<int> response = await Mediator.Send(model).ConfigureAwait(false);
             return Ok(response);
         }
 
@@ -43,7 +44,7 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers
         [Route("/UpdateCustomer")]
         public async Task<IActionResult> UpdateCustomer(AddOrModifyCustomerCommand model)
         {
-            var response = await Mediator.Send(model).ConfigureAwait(false);
+            ServiceResponse<int> response = await Mediator.Send(model).ConfigureAwait(false);
             return Ok(response);
         }
 
@@ -51,7 +52,7 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers
         [Route("/DeleteCustomer")]
         public async Task<IActionResult> DeleteCustomer(DeleteCustomerCommand model)
         {
-            var response = await Mediator.Send(model).ConfigureAwait(false);
+            ServiceResponse<bool> response = await Mediator.Send(model).ConfigureAwait(false);
             return Ok(response);
         }
 

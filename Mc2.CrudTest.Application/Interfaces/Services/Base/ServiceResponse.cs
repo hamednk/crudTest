@@ -31,7 +31,7 @@
         public void SetData(T value, int total = -1, string message = null)
         {
             Data = value;
-            var dictionary = value as IDictionary;
+            IDictionary dictionary = value as IDictionary;
             if (dictionary != null)
             {
                 ResultStatus = dictionary.Count == 0 ? ResultStatus.DataNotFound : ResultStatus.Successful;

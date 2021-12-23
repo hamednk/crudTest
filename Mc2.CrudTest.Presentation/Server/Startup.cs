@@ -2,6 +2,8 @@ using Mc2.CrudTest.Application;
 using Mc2.CrudTest.Application.Interfaces;
 using Mc2.CrudTest.Application.Interfaces.Services;
 using FluentValidation.AspNetCore;
+using Mc2.CrudTest.Persistence;
+using Mc2.CrudTest.Persistence.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -10,8 +12,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Persistence;
-using Persistence.Services;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace Mc2.CrudTest.Presentation.Server

@@ -1,20 +1,20 @@
-﻿namespace Persistence.Services
-{
-    using Mc2.CrudTest.Application.Interfaces;
-    using Mc2.CrudTest.Application.Interfaces.Services;
-    using Mc2.CrudTest.Application.Interfaces.Services.Base;
-    using System;
-    using System.Collections.Generic;
-    using System.Data;
-    using System.Data.SqlClient;
-    using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
+using System.Threading.Tasks;
+using Mc2.CrudTest.Application.Interfaces;
+using Mc2.CrudTest.Application.Interfaces.Services;
+using Mc2.CrudTest.Application.Interfaces.Services.Base;
 
+namespace Mc2.CrudTest.Persistence.Services
+{
     public class GenericService : IGenericService
     {
-        private readonly IGenericRepository _GenericRepository;
+        private readonly IGenericRepository _genericRepository;
         public GenericService(IServiceProvider service)
         {
-            _GenericRepository = (IGenericRepository)service.GetService(typeof(IGenericRepository));
+            _genericRepository = (IGenericRepository)service.GetService(typeof(IGenericRepository));
         }
 
         private static void ErrorHandler<T>(ServiceResponse<T> result, dynamic ex)
@@ -24,10 +24,10 @@
 
         public async Task<ServiceResponse<T>> Add<T>(string spName, object data)
         {
-            var result = new ServiceResponse<T>();
+            ServiceResponse<T> result = new ServiceResponse<T>();
             try
             {
-                var resData = await _GenericRepository.Add<T>(spName, data).ConfigureAwait(false);
+                T resData = await _genericRepository.Add<T>(spName, data).ConfigureAwait(false);
                 result.SetData(resData);
             }
             catch (SqlException ex)
@@ -43,10 +43,10 @@
 
         public async Task<ServiceResponse<List<T>>> List<T>(string spName, object data)
         {
-            var result = new ServiceResponse<List<T>>();
+            ServiceResponse<List<T>> result = new ServiceResponse<List<T>>();
             try
             {
-                var items = await _GenericRepository.List<T>(spName, data).ConfigureAwait(false);
+                KeyValuePair<int, List<T>> items = await _genericRepository.List<T>(spName, data).ConfigureAwait(false);
                 result.SetData(items.Value, items.Key);
             }
             catch (SqlException ex)
@@ -62,10 +62,10 @@
 
         public async Task<ServiceResponse<List<T>>> List<T>(string nameOrQuery, object data, CommandType commandType)
         {
-            var result = new ServiceResponse<List<T>>();
+            ServiceResponse<List<T>> result = new ServiceResponse<List<T>>();
             try
             {
-                var items = await _GenericRepository.List<T>(nameOrQuery, data, commandType).ConfigureAwait(false);
+                List<T> items = await _genericRepository.List<T>(nameOrQuery, data, commandType).ConfigureAwait(false);
                 result.SetData(items, items.Count);
             }
             catch (SqlException ex)
@@ -81,10 +81,10 @@
 
         public async Task<ServiceResponse<List<T>>> ActionWithQuery<T>(string query)
         {
-            var result = new ServiceResponse<List<T>>();
+            ServiceResponse<List<T>> result = new ServiceResponse<List<T>>();
             try
             {
-                var resList = await _GenericRepository.ListWithQuery<T>(query).ConfigureAwait(false);
+                List<T> resList = await _genericRepository.ListWithQuery<T>(query).ConfigureAwait(false);
                 result.SetData(resList, resList.Count);
             }
             catch (SqlException ex)
@@ -101,10 +101,10 @@
 
         public async Task<ServiceResponse<List<T>>> ActionWithQueryAndParams<T>(string query, object data)
         {
-            var result = new ServiceResponse<List<T>>();
+            ServiceResponse<List<T>> result = new ServiceResponse<List<T>>();
             try
             {
-                var resList = await _GenericRepository.ListWithQueryAndParams<T>(query, data).ConfigureAwait(false);
+                List<T> resList = await _genericRepository.ListWithQueryAndParams<T>(query, data).ConfigureAwait(false);
                 result.SetData(resList, resList.Count);
             }
             catch (SqlException ex)
@@ -121,10 +121,10 @@
 
         public async Task<ServiceResponse<List<T>>> ActionWithTable<T>(string tableName)
         {
-            var result = new ServiceResponse<List<T>>();
+            ServiceResponse<List<T>> result = new ServiceResponse<List<T>>();
             try
             {
-                var resList = await _GenericRepository.ListWithTable<T>(tableName).ConfigureAwait(false);
+                List<T> resList = await _genericRepository.ListWithTable<T>(tableName).ConfigureAwait(false);
                 result.SetData(resList, resList.Count);
             }
             catch (SqlException ex)
@@ -141,10 +141,10 @@
 
         public async Task<ServiceResponse<List<T>>> ActionWithTableAndParams<T>(string tableName, object data)
         {
-            var result = new ServiceResponse<List<T>>();
+            ServiceResponse<List<T>> result = new ServiceResponse<List<T>>();
             try
             {
-                var resList = await _GenericRepository.ListWithTableAndParams<T>(tableName, data).ConfigureAwait(false);
+                List<T> resList = await _genericRepository.ListWithTableAndParams<T>(tableName, data).ConfigureAwait(false);
                 result.SetData(resList, resList.Count);
             }
             catch (SqlException ex)
@@ -161,11 +161,11 @@
 
         public async Task<ServiceResponse<T>> Get<T>(string spName, object data)
         {
-            var result = new ServiceResponse<T>();
+            ServiceResponse<T> result = new ServiceResponse<T>();
 
             try
             {
-                result.SetData(await _GenericRepository.Get<T>(spName, data).ConfigureAwait(false));
+                result.SetData(await _genericRepository.Get<T>(spName, data).ConfigureAwait(false));
             }
             catch (Exception ex)
             {
@@ -176,10 +176,10 @@
 
         public async Task<ServiceResponse<T>> Edit<T>(string spName, object data)
         {
-            var result = new ServiceResponse<T>();
+            ServiceResponse<T> result = new ServiceResponse<T>();
             try
             {
-                var id = await _GenericRepository.Edit<T>(spName, data).ConfigureAwait(false);
+                T id = await _genericRepository.Edit<T>(spName, data).ConfigureAwait(false);
                 if (id != null)
                     result.SetData(id);
                 else
@@ -196,10 +196,10 @@
 
         public async Task<ServiceResponse<bool>> Delete(string spName, object data)
         {
-            var result = new ServiceResponse<bool>();
+            ServiceResponse<bool> result = new ServiceResponse<bool>();
             try
             {
-                    var res  = await _GenericRepository.Delete(spName, data).ConfigureAwait(false);
+                    bool res  = await _genericRepository.Delete(spName, data).ConfigureAwait(false);
                     result.SetData(res);
             }
             catch (Exception ex)
