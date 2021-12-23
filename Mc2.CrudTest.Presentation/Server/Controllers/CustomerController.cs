@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Mc2.CrudTest.Application.Features.Auth.Commands.AddOrModifyCustomer;
+using Mc2.CrudTest.Application.Features.Auth.Commands.DeleteCustomer;
+using Mc2.CrudTest.Application.Features.Auth.Queries.GetCustomers;
 using Mc2.CrudTest.Application.Interfaces.Services.Base;
 
 namespace Mc2.CrudTest.Presentation.Server.Controllers

@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Mc2.CrudTest.Application.Features.Auth.Commands;
+using Mc2.CrudTest.Application.Features.Auth.Commands.AddOrModifyCustomer;
+using Mc2.CrudTest.Application.Features.Auth.Commands.DeleteCustomer;
 using Mc2.CrudTest.Application.Features.Auth.Queries;
+using Mc2.CrudTest.Application.Features.Auth.Queries.GetCustomers;
 using Mc2.CrudTest.Application.Interfaces.Services;
 using Mc2.CrudTest.Application.Interfaces.Services.Base;
 

@@ -1,11 +1,11 @@
-﻿using Mc2.CrudTest.Application.Interfaces.Services;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using Mc2.CrudTest.Application.Interfaces.Services;
 using Mc2.CrudTest.Application.Interfaces.Services.Base;
 using Mc2.CrudTest.Domain;
 using MediatR;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace Mc2.CrudTest.Application.Features.Auth.Commands
+namespace Mc2.CrudTest.Application.Features.Auth.Commands.DeleteCustomer
 {
     public partial class DeleteCustomerCommand : Customer,IRequest<ServiceResponse<bool>>
     {

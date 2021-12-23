@@ -1,11 +1,11 @@
-﻿using Mc2.CrudTest.Application.Interfaces.Services;
-using Mc2.CrudTest.Application.Interfaces.Services.Base;
-using MediatR;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using Mc2.CrudTest.Application.Interfaces.Services;
+using Mc2.CrudTest.Application.Interfaces.Services.Base;
 using Mc2.CrudTest.Domain;
+using MediatR;
 
-namespace Mc2.CrudTest.Application.Features.Auth.Commands
+namespace Mc2.CrudTest.Application.Features.Auth.Commands.AddOrModifyCustomer
 {
     public partial class AddOrModifyCustomerCommand : Customer, IRequest<ServiceResponse<int>>
     {

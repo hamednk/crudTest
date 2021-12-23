@@ -1,12 +1,12 @@
-﻿using Mc2.CrudTest.Application.Interfaces.Services;
-using Mc2.CrudTest.Application.Interfaces.Services.Base;
-using Mc2.CrudTest.Application.DTO.Customer;
-using MediatR;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Mc2.CrudTest.Application.DTO.Customer;
+using Mc2.CrudTest.Application.Interfaces.Services;
+using Mc2.CrudTest.Application.Interfaces.Services.Base;
+using MediatR;
 
-namespace Mc2.CrudTest.Application.Features.Auth.Queries
+namespace Mc2.CrudTest.Application.Features.Auth.Queries.GetCustomers
 {
     public partial class GetCustomersQuery : CustomerSearchDto, IRequest<ServiceResponse<List<GetCustomersQueryResult>>>
     {

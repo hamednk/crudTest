@@ -1,14 +1,14 @@
-﻿using Mc2.CrudTest.Application.Interfaces.Services;
-using FluentValidation;
-using PhoneNumbers;
-using System;
+﻿using System;
 using System.Linq;
 using System.Net.Mail;
 using System.Threading;
 using System.Threading.Tasks;
+using FluentValidation;
+using Mc2.CrudTest.Application.Interfaces.Services;
 using Mc2.CrudTest.Domain;
+using PhoneNumbers;
 
-namespace Mc2.CrudTest.Application.Features.Auth.Commands
+namespace Mc2.CrudTest.Application.Features.Auth.Commands.AddOrModifyCustomer
 {
 
     public class AddOrModifyCustomerValidator : AbstractValidator<AddOrModifyCustomerCommand>

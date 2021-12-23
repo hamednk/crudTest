@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Mc2.CrudTest.Application.Features.Auth.Queries
+namespace Mc2.CrudTest.Application.Features.Auth.Queries.GetCustomers
 {
     public class GetCustomersQueryResult
     {
