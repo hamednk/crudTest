@@ -17,7 +17,7 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers.Base
     {
         public BaseAPIController()
         {
-            CultureInfo newCulture = new CultureInfo("fa-IR", false);
+            CultureInfo newCulture = new("fa-IR", false);
             newCulture.DateTimeFormat.LongDatePattern = "yyyy/MM/dd HH:mm:ss";
             newCulture.DateTimeFormat.ShortDatePattern = "yyyy/MM/dd";
             newCulture.DateTimeFormat.DateSeparator = "/";
@@ -35,7 +35,7 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers.Base
 
         public override OkObjectResult Ok([ActionResultObjectValue] object value)
         {
-            OkObjectResult response = new OkObjectResult(value);
+            OkObjectResult response = new(value);
             dynamic result = value;
 
             response.Value = value;

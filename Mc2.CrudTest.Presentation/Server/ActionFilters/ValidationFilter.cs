@@ -12,7 +12,7 @@ namespace Mc2.CrudTest.Presentation.Server.ActionFilters
         {
             if (!context.ModelState.IsValid)
             {
-                ServiceResponse<List<string>> result = new ServiceResponse<List<string>>();
+                ServiceResponse<List<string>> result = new();
 
                 List<string> data = context.ModelState
                      .Values

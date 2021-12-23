@@ -19,7 +19,7 @@ namespace Mc2.CrudTest.Persistence.Services
 
         public async Task<ServiceResponse<int>> AddOrModifyCustomer(AddOrModifyCustomerCommand command)
         {
-            ServiceResponse<int> response = new ServiceResponse<int>();
+            ServiceResponse<int> response = new();
             try
             {
                 if (command.Id.HasValue)
@@ -48,7 +48,7 @@ namespace Mc2.CrudTest.Persistence.Services
 
         public async Task<ServiceResponse<bool>> DeleteCustomer(DeleteCustomerCommand command)
         {
-            ServiceResponse<bool> response = new ServiceResponse<bool>();
+            ServiceResponse<bool> response = new();
             try
             {
                 response = await Service.Delete("usp_Customer_Delete", new { Id = command.Id }).ConfigureAwait(false);
@@ -74,7 +74,7 @@ namespace Mc2.CrudTest.Persistence.Services
 
         public async Task<ServiceResponse<List<GetCustomersQueryResult>>> GetCustomers(GetCustomersQuery command)
         {
-            ServiceResponse<List<GetCustomersQueryResult>> response = new ServiceResponse<List<GetCustomersQueryResult>>();
+            ServiceResponse<List<GetCustomersQueryResult>> response = new();
             try
             {
                 response = await Service.List<GetCustomersQueryResult>("usp_Customer_List", command, System.Data.CommandType.StoredProcedure).ConfigureAwait(false);

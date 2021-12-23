@@ -14,7 +14,7 @@ namespace Mc2.CrudTest.Application.DTO.Customer
         public DateTime? CreatedOn { get; set; }
     }
 
-    public class CustomerSearchDTO : BaseSearchRequestDTO
+    public class CustomerSearchDTO : BaseSearchRequestDto
     {
         public int? Id { get; set; }
         public string FirstName { get; set; }

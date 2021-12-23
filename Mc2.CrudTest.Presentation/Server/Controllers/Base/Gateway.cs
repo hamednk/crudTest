@@ -11,7 +11,7 @@ namespace Mc2.CrudTest.Presentation.Server.Controllers.Base
         public static ServiceResponse<T> CallAPI<T>(this object modelInput, string baseAddress, string routeName)
         {
             string finalResult = string.Empty;
-            ServiceResponse<T> response = new ServiceResponse<T>();
+            ServiceResponse<T> response = new();
 
             try
             {

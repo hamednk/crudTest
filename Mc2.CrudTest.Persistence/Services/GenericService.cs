@@ -24,7 +24,7 @@ namespace Mc2.CrudTest.Persistence.Services
 
         public async Task<ServiceResponse<T>> Add<T>(string spName, object data)
         {
-            ServiceResponse<T> result = new ServiceResponse<T>();
+            ServiceResponse<T> result = new();
             try
             {
                 T resData = await _genericRepository.Add<T>(spName, data).ConfigureAwait(false);
@@ -43,7 +43,7 @@ namespace Mc2.CrudTest.Persistence.Services
 
         public async Task<ServiceResponse<List<T>>> List<T>(string spName, object data)
         {
-            ServiceResponse<List<T>> result = new ServiceResponse<List<T>>();
+            ServiceResponse<List<T>> result = new();
             try
             {
                 KeyValuePair<int, List<T>> items = await _genericRepository.List<T>(spName, data).ConfigureAwait(false);
@@ -62,7 +62,7 @@ namespace Mc2.CrudTest.Persistence.Services
 
         public async Task<ServiceResponse<List<T>>> List<T>(string nameOrQuery, object data, CommandType commandType)
         {
-            ServiceResponse<List<T>> result = new ServiceResponse<List<T>>();
+            ServiceResponse<List<T>> result = new();
             try
             {
                 List<T> items = await _genericRepository.List<T>(nameOrQuery, data, commandType).ConfigureAwait(false);
@@ -81,7 +81,7 @@ namespace Mc2.CrudTest.Persistence.Services
 
         public async Task<ServiceResponse<List<T>>> ActionWithQuery<T>(string query)
         {
-            ServiceResponse<List<T>> result = new ServiceResponse<List<T>>();
+            ServiceResponse<List<T>> result = new();
             try
             {
                 List<T> resList = await _genericRepository.ListWithQuery<T>(query).ConfigureAwait(false);
@@ -101,7 +101,7 @@ namespace Mc2.CrudTest.Persistence.Services
 
         public async Task<ServiceResponse<List<T>>> ActionWithQueryAndParams<T>(string query, object data)
         {
-            ServiceResponse<List<T>> result = new ServiceResponse<List<T>>();
+            ServiceResponse<List<T>> result = new();
             try
             {
                 List<T> resList = await _genericRepository.ListWithQueryAndParams<T>(query, data).ConfigureAwait(false);
@@ -121,7 +121,7 @@ namespace Mc2.CrudTest.Persistence.Services
 
         public async Task<ServiceResponse<List<T>>> ActionWithTable<T>(string tableName)
         {
-            ServiceResponse<List<T>> result = new ServiceResponse<List<T>>();
+            ServiceResponse<List<T>> result = new();
             try
             {
                 List<T> resList = await _genericRepository.ListWithTable<T>(tableName).ConfigureAwait(false);
@@ -141,7 +141,7 @@ namespace Mc2.CrudTest.Persistence.Services
 
         public async Task<ServiceResponse<List<T>>> ActionWithTableAndParams<T>(string tableName, object data)
         {
-            ServiceResponse<List<T>> result = new ServiceResponse<List<T>>();
+            ServiceResponse<List<T>> result = new();
             try
             {
                 List<T> resList = await _genericRepository.ListWithTableAndParams<T>(tableName, data).ConfigureAwait(false);
@@ -161,7 +161,7 @@ namespace Mc2.CrudTest.Persistence.Services
 
         public async Task<ServiceResponse<T>> Get<T>(string spName, object data)
         {
-            ServiceResponse<T> result = new ServiceResponse<T>();
+            ServiceResponse<T> result = new();
 
             try
             {
@@ -176,27 +176,19 @@ namespace Mc2.CrudTest.Persistence.Services
 
         public async Task<ServiceResponse<T>> Edit<T>(string spName, object data)
         {
-            ServiceResponse<T> result = new ServiceResponse<T>();
-            try
-            {
-                T id = await _genericRepository.Edit<T>(spName, data).ConfigureAwait(false);
-                if (id != null)
-                    result.SetData(id);
-                else
-                    result.SetException("سطر تکراری است"); //ErrorResource.DuplicateRow);
+            ServiceResponse<T> result = new();
+            T id = await _genericRepository.Edit<T>(spName, data).ConfigureAwait(false);
+            if (id != null)
+                result.SetData(id);
+            else
+                result.SetException($"Duplicate record, spName: {spName}"); //ErrorResource.DuplicateRow);
 
-                return result;
-
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
+            return result;
         }
 
         public async Task<ServiceResponse<bool>> Delete(string spName, object data)
         {
-            ServiceResponse<bool> result = new ServiceResponse<bool>();
+            ServiceResponse<bool> result = new();
             try
             {
                     bool res  = await _genericRepository.Delete(spName, data).ConfigureAwait(false);

@@ -49,7 +49,7 @@
 </EditForm>
 
 @code {
-    Customer model = new Customer();
+    Customer model = new();
     protected async void InsertCustomer()
     {
         HttpResponseMessage responseMessage = await _http.PostAsJsonAsync<Customer>("InsertCustomer", model).ConfigureAwait(false);

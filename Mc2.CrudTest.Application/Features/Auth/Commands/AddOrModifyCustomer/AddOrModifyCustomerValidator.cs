@@ -45,7 +45,7 @@ namespace Mc2.CrudTest.Application.Features.Auth.Commands
             {
                 try
                 {
-                    MailAddress m = new MailAddress(model.Email);
+                    MailAddress m = new(model.Email);
                     return true;
                 }
                 catch (FormatException)

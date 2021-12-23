@@ -2,9 +2,9 @@
 
 namespace Mc2.CrudTest.Application.DTO.Base
 {
-    public class BaseSearchRequestDTO
+    public class BaseSearchRequestDto
     {
-        public BaseSearchRequestDTO()
+        protected BaseSearchRequestDto()
         {
             PageSize = 50;
             PageIndex = 0;
